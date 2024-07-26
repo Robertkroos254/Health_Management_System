@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthTrack - Advanced Health Record Management</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --bg-color: #ecf0f1;
+            --text-color: #34495e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
+        
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        
+        /* Header Styles */
+        header {
+            background: var(--primary-color);
+            color: #fff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: 3px solid var(--secondary-color);
+        }
+        
+        header a {
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+        
+        header .branding {
+            float: left;
+        }
+        
+        header .branding h1 {
+            margin: 0;
+        }
+        
+        header nav {
+            float: right;
+            margin-top: 10px;
+        }
+        
+        header nav ul {
+            list-style: none;
+        }
+        
+        header nav ul li {
+            display: inline;
+            margin-left: 20px;
+        }
+        
+        header .highlight, header .current a {
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+        
+        header a:hover {
+            color: #ffffff;
+            font-weight: bold;
+        }
+        
+        /* Showcase */
+        #showcase {
+            min-height: 400px;
+            background: url('https://via.placeholder.com/1500x400.png?text=Advanced+Health+Record+Management') no-repeat center center/cover;
+            text-align: center;
+            color: #fff;
+        }
+        
+        #showcase h1 {
+            margin-top: 100px;
+            font-size: 55px;
+            margin-bottom: 10px;
+        }
+        
+        #showcase p {
+            font-size: 20px;
+        }
+        
+        /* Boxes */
+        #boxes {
+            margin-top: 20px;
+        }
+        
+        #boxes .box {
+            float: left;
+            width: 30%;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        #boxes .box i {
+            font-size: 50px;
+            color: var(--secondary-color);
+        }
+        
+        /* Services Section */
+        #services {
+            padding: 20px;
+            background: var(--bg-color);
+            text-align: center;
+        }
+        
+        #services h2 {
+            margin-bottom: 20px;
+        }
+        
+        /* About Section */
+        #about {
+            padding: 20px;
+            background: #fff;
+            text-align: center;
+        }
+        
+        #about h2 {
+            margin-bottom: 20px;
+        }
+        
+        /* Login Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 300px;
+            border-radius: 5px;
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        
+        .login-form button {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .login-form button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div id="branding">
+                <h1><span class="highlight">Health</span>Track</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li class="current"><a href="index.html">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#" id="login-btn">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="showcase">
+        <div class="container">
+            <h1>Advanced Health Record Management</h1>
+            <!-- <p>Streamline your healthcare institution's record-keeping with our cutting-edge system</p> -->
+        </div>
+    </section>
+
+    
+
+    <section id="boxes">
+        <div class="container">
+            <div class="box">
+                <i class="fas fa-user-md"></i>
+                <h3>Patient Records</h3>
+                <p>Securely manage and access patient information with ease.</p>
+            </div>
+            <div class="box">
+                <i class="fas fa-heartbeat"></i>
+                <h3>Real-time Monitoring</h3>
+                <p>Keep track of vital signs and patient progress in real-time.</p>
+            </div>
+            <div class="box">
+                <i class="fas fa-chart-bar"></i>
+                <h3>Analytics & Reporting</h3>
+                <p>Generate insightful reports to improve healthcare delivery.</p>
+            </div>
+        </div>
+    </section>
+    <section id="services">
+        <div class="container">
+            <h2>Our Services</h2>
+            <p>We offer a range of services including patient record management, real-time monitoring, and comprehensive analytics and reporting to enhance healthcare delivery.</p>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2>About Us</h2>
+            <p>HealthTrack is dedicated to providing advanced health record management solutions to streamline healthcare operations and improve patient care.</p>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Login</h2>
+            <form class="login-form" action="login.php" method="post">
+                <input type="text" placeholder="Username" name="username" required>
+                <input type="password" placeholder="Password" name="password" required>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById('login-modal');
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("login-btn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal 
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

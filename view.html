@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <style>
+        .input-container {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .input-container label {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        .input-container input {
+            margin-top: 0;
+            padding: 5px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        .generate-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .generate-btn:hover {
+            background-color: #218838;
+        }
+        .data-container {
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-family: Arial, sans-serif;
+        }
+        table thead {
+            background-color: #f2f2f2;
+        }
+        table th, table td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+        table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .print-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            display: none; /* Initially hidden */
+        }
+        .print-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="input-container">
+        <label for="report-date">Select Date:</label>
+        <input type="date" id="report-date" name="report-date">
+        <button class="generate-btn" id="generate-report-btn">Generate Report</button>
+    </div>
+    <div class="data-container" id="data-container"></div>
+    <button class="print-btn" id="print-btn">Print Report</button>
+
+    <script>
+        document.getElementById('generate-report-btn').addEventListener('click', function() {
+            const reportDate = document.getElementById('report-date').value;
+            if (reportDate) {
+                fetchReport(reportDate);
+            } else {
+                alert('Please select a date.');
+            }
+        });
+
+        function fetchReport(date) {
+            fetch('fetch_nbu.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ date: date })
+            })
+            .then(response => response.json())
+            .then(data => {
+                displayReport(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function displayReport(data) {
+            const dataContainer = document.getElementById('data-container');
+            const printBtn = document.getElementById('print-btn');
+
+            if (data.length === 0) {
+                dataContainer.innerHTML = 'No data available for the selected date.';
+                printBtn.style.display = 'none'; // Hide the print button
+                return;
+            }
+
+            let tableHTML = '<table><thead><tr>';
+            Object.keys(data[0]).forEach(key => {
+                tableHTML += `<th>${key}</th>`;
+            });
+            tableHTML += '</tr></thead><tbody>';
+
+            data.forEach(row => {
+                tableHTML += '<tr>';
+                Object.values(row).forEach(value => {
+                    tableHTML += `<td>${value}</td>`;
+                });
+                tableHTML += '</tr>';
+            });
+
+            tableHTML += '</tbody></table>';
+            dataContainer.innerHTML = tableHTML;
+            printBtn.style.display = 'block'; // Show the print button
+        }
+
+        document.getElementById('print-btn').addEventListener('click', function() {
+            const printWindow = window.open('', '', 'height=600,width=800');
+            printWindow.document.write('<html><head><title>Print Table</title>');
+            printWindow.document.write('<style>table { width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; }');
+            printWindow.document.write('table thead { background-color: #f2f2f2; }');
+            printWindow.document.write('table th, table td { border: 1px solid #dddddd; text-align: left; padding: 8px; }');
+            printWindow.document.write('table tr:nth-child(even) { background-color: #f9f9f9; }');
+            printWindow.document.write('table tr:hover { background-color: #f1f1f1; }');
+            printWindow.document.write('table th { background-color: #4CAF50; color: white; }</style></head><body>');
+            printWindow.document.write(document.querySelector('.data-container').innerHTML);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.focus();
+            printWindow.print();
+        });
+    </script>
+</body>
+</html>
